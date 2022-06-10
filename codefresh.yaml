@@ -1,0 +1,35 @@
+version: "1.0"
+# Stages can help you organize your steps in stages
+stages:
+  - "clone"
+  - "build"
+  - "deploy"
+
+steps:
+  clone:
+    title: "Cloning repository"
+    type: "git-clone"
+    repo: "Akshayapi/Hello"
+    # CF_BRANCH value is auto set when pipeline is triggered
+    # Learn more at codefresh.io/docs/docs/codefresh-yaml/variables/
+    revision: "${{CF_BRANCH}}"
+    git: "goodrx"
+    stage: "clone"
+
+  build application:
+    title: "build"
+    type: "freestyle" # Run any command
+    image: 'maven:3.5.2-jdk-8-alpine'
+    working_directory: "${{clone}}" # Running command where code cloned   /${{project}}
+    commands:
+      - mvn clean package -Dmaven.repo.local=/codefresh/volume/m2_repository -s settings.xml -Dapp.runtime=${{runtime}} -Denvironment=${{environment}} -Denv=${{env}}  -Danypoint.platform.client_id=${{clientId}} -Danypoint.platform.client_secret=${{clientSecret}} -DworkerType=${{worker_type}} -DnumberOfWorkers=${{number_of_workers}} -Dserver.username=${{serveruser}} -Dserver.password=${{serverpass}}
+    stage: "build"
+    
+  deploy application:
+    title: "deploy"
+    type: "freestyle" # Run any command
+    image: 'maven:3.5.2-jdk-8-alpine'
+    working_directory: "${{clone}}" # Running command where code cloned   /${{project}}
+    commands:
+      - mvn -Dmaven.repo.local=/codefresh/volume/m2_repository -s settings.xml -Dapp.runtime=${{runtime}} -Denvironment=${{environment}} -Denv=${{env}}  -Danypoint.platform.client_id=${{clientId}} -Danypoint.platform.client_secret=${{clientSecret}} -DworkerType=${{worker_type}} -DnumberOfWorkers=${{number_of_workers}} -Dserver.username=${{serveruser}} -Dserver.password=${{serverpass}}   clean deploy -DmuleDeploy -DskipTests
+    stage: "deploy"
