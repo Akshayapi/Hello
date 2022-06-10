@@ -13,7 +13,7 @@ steps:
     # CF_BRANCH value is auto set when pipeline is triggered
     # Learn more at codefresh.io/docs/docs/codefresh-yaml/variables/
     revision: "main" # "${{CF_BRANCH}}"
-    git: "goodrx"
+    git: "<codefresh org name>"
     stage: "clone"
 
   build application:
