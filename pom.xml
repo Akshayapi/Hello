@@ -35,7 +35,7 @@
 						<uri>https://anypoint.mulesoft.com</uri> 
 						<server>Anypoint</server>  
 						<muleVersion>${app.runtime}</muleVersion> 
-						<applicationName>HelloWorld-10062022-prac1</applicationName> 
+						<applicationName>HelloWorld-10June-prac</applicationName> 
 						<workers>${numberOfWorkers}</workers>
 						<workerType>${workerType}</workerType>
 						<environment>${environment}</environment>
