@@ -1,6 +1,6 @@
 <settings>
 <servers> 
-      <server>
+      <server> 
       <id>Anypoint</id>
         <username>${server.username}</username>
         <password>${server.password}</password>
